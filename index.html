@@ -1,0 +1,1106 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>8 марта для Наси</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg0:#070814;
+      --bg1:#0a0c24;
+      --card:#0c1027cc;
+      --stroke:rgba(255,255,255,.14);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.68);
+      --accent1:#ff3bd4;
+      --accent2:#4cf6ff;
+      --accent3:#b7ff4c;
+      --shadow: 0 20px 60px rgba(0,0,0,.55);
+      --glass: blur(14px) saturate(1.2);
+      --radius: 22px;
+      --ease: cubic-bezier(.2,.9,.2,1);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Manrope, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      overflow-x:hidden;
+      background:
+        radial-gradient(1200px 700px at 10% 10%, rgba(255,59,212,.18), transparent 60%),
+        radial-gradient(900px 600px at 90% 20%, rgba(76,246,255,.14), transparent 60%),
+        radial-gradient(900px 700px at 50% 100%, rgba(183,255,76,.10), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+    }
+
+    /* reduce motion */
+    @media (prefers-reduced-motion: reduce){
+      *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
+    }
+
+    .grain{
+      pointer-events:none;
+      position:fixed; inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
+      mix-blend-mode:overlay;
+      opacity:.28;
+      transform:translateZ(0);
+      z-index: 1;
+    }
+
+    .aurora{
+      position:fixed; inset:-30vh -20vw;
+      pointer-events:none;
+      filter: blur(40px);
+      opacity:.65;
+      background:
+        conic-gradient(from 200deg at 30% 40%,
+          rgba(255,59,212,.0),
+          rgba(255,59,212,.22),
+          rgba(76,246,255,.22),
+          rgba(183,255,76,.14),
+          rgba(255,59,212,.22),
+          rgba(255,59,212,.0));
+      animation: drift 14s ease-in-out infinite alternate;
+      z-index: 0;
+    }
+    @keyframes drift{
+      0%{transform:translate3d(-3%, -2%, 0) rotate(-6deg) scale(1.05)}
+      100%{transform:translate3d(3%, 2%, 0) rotate(7deg) scale(1.1)}
+    }
+
+    .wrap{
+      position:relative;
+      min-height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: clamp(18px, 4vw, 42px);
+      z-index: 2;
+    }
+
+    .stage{
+      width:min(1040px, 100%);
+      position:relative;
+      perspective: 1200px;
+    }
+
+    /* --- HERO --- */
+    .hero{
+      position:relative;
+      padding: clamp(22px, 4vw, 34px);
+      border:1px solid var(--stroke);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      backdrop-filter: var(--glass);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      transform-origin: center;
+      transition: opacity .55s var(--ease), transform .65s var(--ease), filter .65s var(--ease);
+    }
+    .hero.off{
+      opacity:0;
+      transform: translateY(-10px) scale(.98);
+      filter: blur(8px);
+      pointer-events:none;
+    }
+    .hero::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(500px 180px at 25% 20%, rgba(255,59,212,.35), transparent 70%),
+        radial-gradient(460px 220px at 80% 0%, rgba(76,246,255,.28), transparent 70%),
+        radial-gradient(520px 220px at 70% 120%, rgba(183,255,76,.18), transparent 75%);
+      opacity:.65;
+      pointer-events:none;
+    }
+
+    .topline{
+      display:flex;
+      gap:14px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      position:relative;
+      z-index:1;
+    }
+
+    .badge{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      padding:10px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.22);
+      backdrop-filter: blur(10px);
+      font-weight:700;
+      letter-spacing:.2px;
+    }
+    .badge i{
+      width:10px; height:10px; border-radius:50%;
+      background: linear-gradient(90deg, var(--accent1), var(--accent2));
+      box-shadow: 0 0 18px rgba(255,59,212,.4);
+      display:inline-block;
+    }
+
+    h1{
+      margin: 18px 0 8px;
+      font-size: clamp(28px, 4.2vw, 48px);
+      line-height:1.05;
+      letter-spacing:-.02em;
+      position:relative;
+      z-index:1;
+    }
+
+    .sub{
+      margin:0;
+      font-size: clamp(14px, 1.4vw, 16px);
+      color: var(--muted);
+      position:relative;
+      z-index:1;
+      max-width: 60ch;
+    }
+
+    .glowName{
+      background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      filter: drop-shadow(0 10px 22px rgba(255,59,212,.20));
+    }
+
+    /* GIF tiles */
+    .gifRow{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      position:relative;
+      z-index:1;
+    }
+    @media (max-width: 720px){ .gifRow{grid-template-columns:1fr} }
+
+    .gifTile{
+      border:1px solid rgba(255,255,255,.14);
+      border-radius: 16px;
+      overflow:hidden;
+      background: rgba(0,0,0,.18);
+      position:relative;
+      aspect-ratio: 16/9;
+      box-shadow: 0 14px 40px rgba(0,0,0,.4);
+      transform: translateZ(0);
+    }
+    .gifTile img{
+      width:100%; height:100%;
+      object-fit:cover;
+      filter: saturate(1.1) contrast(1.05);
+      transform: scale(1.02);
+    }
+    .gifTile::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.65));
+    }
+    .gifCap{
+      position:absolute; left:14px; bottom:12px; right:14px;
+      z-index:2;
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .gifCap b{ font-size: 14px; letter-spacing:.2px; }
+    .gifCap span{ font-size: 12px; color: rgba(255,255,255,.72); }
+
+    /* Cards */
+    .grid{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      position:relative;
+      z-index:1;
+    }
+    @media (max-width: 920px){ .grid{grid-template-columns:1fr} }
+
+    .card{
+      position:relative;
+      border:1px solid var(--stroke);
+      border-radius: var(--radius);
+      background: rgba(12,16,39,.55);
+      backdrop-filter: var(--glass);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition: transform .18s ease, border-color .18s ease;
+      min-height: 260px;
+    }
+    .card:hover{border-color: rgba(255,255,255,.24)}
+    .card::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(400px 180px at 20% 20%, rgba(255,59,212,.18), transparent 60%),
+        radial-gradient(340px 200px at 80% 30%, rgba(76,246,255,.16), transparent 60%);
+      opacity:.9;
+      pointer-events:none;
+      transform: translateZ(-1px);
+    }
+    .cardInner{
+      position:relative;
+      padding: 20px 20px 18px;
+      transform: translateZ(30px);
+    }
+
+    .titleRow{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+    }
+
+    .card h2{
+      margin:0;
+      font-size: 22px;
+      letter-spacing:-.01em;
+    }
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.20);
+      font-size: 12px;
+      color: rgba(255,255,255,.82);
+      white-space:nowrap;
+      user-select:none;
+    }
+    .tag .dot{
+      width:7px; height:7px; border-radius: 50%;
+      background: linear-gradient(90deg, var(--accent2), var(--accent1));
+      box-shadow: 0 0 14px rgba(76,246,255,.35);
+    }
+
+    .desc{
+      margin: 12px 0 0;
+      color: var(--muted);
+      line-height:1.45;
+      font-size: 14px;
+      max-width: 70ch;
+    }
+
+    .list{
+      margin: 14px 0 0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:10px;
+      color: rgba(255,255,255,.84);
+      font-size: 13.5px;
+    }
+    .list li{
+      display:flex; gap:10px; align-items:flex-start;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+    }
+    .list li i{
+      width:10px; height:10px; border-radius: 3px;
+      margin-top:4px;
+      background: linear-gradient(90deg, var(--accent1), var(--accent2));
+      box-shadow: 0 0 18px rgba(255,59,212,.22);
+      flex: 0 0 auto;
+    }
+
+    .actions{
+      display:flex;
+      gap: 10px;
+      margin-top: 16px;
+      flex-wrap:wrap;
+      position:relative;
+    }
+
+    .btn{
+      appearance:none;
+      border:0;
+      cursor:pointer;
+      user-select:none;
+      font-weight:800;
+      letter-spacing:.2px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      transition: transform .12s ease, filter .12s ease, background .12s ease;
+      position:relative;
+      overflow:hidden;
+    }
+    .btn:active{transform: translateY(1px) scale(.99)}
+    .btnPrimary{
+      color: rgba(0,0,0,.92);
+      background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
+      filter: drop-shadow(0 10px 22px rgba(255,59,212,.16));
+    }
+    .btnPrimary:hover{filter: drop-shadow(0 14px 26px rgba(76,246,255,.16))}
+    .btnGhost{
+      color: rgba(255,255,255,.86);
+      background: rgba(0,0,0,.22);
+      border: 1px solid rgba(255,255,255,.14);
+    }
+
+    .btnNope{
+      color: rgba(255,255,255,.9);
+      background: rgba(255,255,255,.06);
+      border:1px dashed rgba(255,255,255,.18);
+      position:relative;
+    }
+    .btnNope small{
+      font-weight:700;
+      opacity:.75;
+      margin-left:8px;
+    }
+
+    .footerNote{
+      margin-top: 12px;
+      font-size: 12px;
+      color: rgba(255,255,255,.55);
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      position:relative;
+      z-index:1;
+    }
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 11px;
+      padding: 2px 8px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.18);
+      border-radius: 999px;
+      color: rgba(255,255,255,.72);
+    }
+
+    /* 3D cube */
+    .cubeWrap{
+      position:absolute;
+      right: clamp(-40px, -1vw, -10px);
+      top: clamp(-50px, -2vw, -20px);
+      width: 220px;
+      height: 220px;
+      pointer-events:none;
+      opacity:.9;
+      transform: translateZ(0);
+      z-index: 0;
+    }
+    .cube{
+      position:absolute;
+      inset: 0;
+      margin:auto;
+      width: 120px;
+      height: 120px;
+      transform-style: preserve-3d;
+      animation: spin 9s linear infinite;
+      filter: drop-shadow(0 18px 42px rgba(0,0,0,.55));
+    }
+    @keyframes spin{
+      0%{transform: rotateX(18deg) rotateY(0deg)}
+      100%{transform: rotateX(18deg) rotateY(360deg)}
+    }
+    .face{
+      position:absolute;
+      width: 120px;
+      height: 120px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.14);
+      background: linear-gradient(135deg, rgba(255,59,212,.18), rgba(76,246,255,.12));
+      backdrop-filter: blur(10px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      color: rgba(255,255,255,.88);
+      text-shadow: 0 10px 24px rgba(0,0,0,.45);
+    }
+    .f1{transform: translateZ(60px)}
+    .f2{transform: rotateY(90deg) translateZ(60px); background: linear-gradient(135deg, rgba(76,246,255,.18), rgba(183,255,76,.12))}
+    .f3{transform: rotateY(180deg) translateZ(60px); background: linear-gradient(135deg, rgba(183,255,76,.16), rgba(255,59,212,.10))}
+    .f4{transform: rotateY(-90deg) translateZ(60px); background: linear-gradient(135deg, rgba(255,255,255,.10), rgba(76,246,255,.10))}
+    .f5{transform: rotateX(90deg) translateZ(60px); background: linear-gradient(135deg, rgba(255,59,212,.14), rgba(255,255,255,.08))}
+    .f6{transform: rotateX(-90deg) translateZ(60px); background: linear-gradient(135deg, rgba(76,246,255,.12), rgba(0,0,0,.18))}
+
+    /* Confetti */
+    #confetti{
+      position:fixed; inset:0;
+      pointer-events:none;
+      z-index:9999;
+    }
+
+    /* ----- PORTAL TRANSITION ----- */
+    .portal{
+      position:fixed; inset:0;
+      pointer-events:none;
+      opacity:0;
+      z-index: 50;
+      display:grid;
+      place-items:center;
+    }
+    .portal.on{ opacity:1; }
+    .portalGlow{
+      width: min(820px, 110vw);
+      aspect-ratio: 1/1;
+      border-radius: 999px;
+      filter: blur(0px);
+      transform: scale(.55);
+      opacity: 0;
+      background:
+        radial-gradient(circle at 35% 30%, rgba(255,59,212,.65), transparent 45%),
+        radial-gradient(circle at 60% 45%, rgba(76,246,255,.55), transparent 46%),
+        radial-gradient(circle at 55% 70%, rgba(183,255,76,.35), transparent 52%),
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,.10), transparent 60%);
+      box-shadow: 0 0 120px rgba(255,59,212,.12);
+      animation: portalIn .85s var(--ease) forwards;
+    }
+    .portal.wow .portalGlow{
+      background:
+        radial-gradient(circle at 30% 35%, rgba(255,59,212,.75), transparent 44%),
+        radial-gradient(circle at 62% 40%, rgba(76,246,255,.55), transparent 46%),
+        radial-gradient(circle at 55% 74%, rgba(183,255,76,.25), transparent 52%);
+    }
+    .portal.thermo .portalGlow{
+      background:
+        radial-gradient(circle at 30% 35%, rgba(76,246,255,.70), transparent 44%),
+        radial-gradient(circle at 62% 42%, rgba(183,255,76,.40), transparent 46%),
+        radial-gradient(circle at 55% 76%, rgba(255,59,212,.25), transparent 52%);
+    }
+    @keyframes portalIn{
+      0%{ opacity:0; transform: scale(.35) rotate(-8deg); filter: blur(10px); }
+      50%{ opacity:1; transform: scale(.75) rotate(0deg); filter: blur(2px); }
+      100%{ opacity:1; transform: scale(2.4) rotate(3deg); filter: blur(10px); }
+    }
+
+    /* ----- SCENE (после выбора) ----- */
+    .scene{
+      position:fixed;
+      inset:0;
+      z-index: 60;
+      display:grid;
+      place-items:center;
+      padding: clamp(16px, 4vw, 40px);
+      pointer-events:none;
+      opacity:0;
+      transform: translateY(10px) scale(.98);
+      filter: blur(10px);
+      transition: opacity .55s var(--ease), transform .65s var(--ease), filter .65s var(--ease);
+    }
+    .scene.on{
+      opacity:1;
+      transform: translateY(0) scale(1);
+      filter: blur(0px);
+      pointer-events:auto;
+    }
+
+    .sceneBg{
+      position:absolute; inset:0;
+      background:
+        radial-gradient(1100px 700px at 15% 10%, rgba(255,59,212,.22), transparent 60%),
+        radial-gradient(900px 650px at 85% 20%, rgba(76,246,255,.18), transparent 60%),
+        radial-gradient(900px 700px at 55% 110%, rgba(183,255,76,.12), transparent 60%),
+        linear-gradient(180deg, #060716, #0a0c24);
+      opacity: 1;
+    }
+    .scene.wow .sceneBg{
+      background:
+        radial-gradient(1100px 700px at 15% 10%, rgba(255,59,212,.28), transparent 60%),
+        radial-gradient(900px 650px at 85% 25%, rgba(76,246,255,.20), transparent 60%),
+        radial-gradient(900px 700px at 55% 115%, rgba(183,255,76,.10), transparent 60%),
+        linear-gradient(180deg, #070814, #0b0f28);
+    }
+    .scene.thermo .sceneBg{
+      background:
+        radial-gradient(1100px 700px at 15% 10%, rgba(76,246,255,.26), transparent 60%),
+        radial-gradient(900px 650px at 85% 25%, rgba(183,255,76,.14), transparent 60%),
+        radial-gradient(900px 700px at 55% 115%, rgba(255,59,212,.10), transparent 60%),
+        linear-gradient(180deg, #050814, #070f22);
+    }
+
+    .sceneCard{
+      width:min(980px, 100%);
+      border:1px solid rgba(255,255,255,.16);
+      border-radius: 26px;
+      background: rgba(12,16,39,.45);
+      backdrop-filter: var(--glass);
+      box-shadow: 0 26px 90px rgba(0,0,0,.65);
+      overflow:hidden;
+      position:relative;
+      transform-style: preserve-3d;
+    }
+    .sceneCard::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(520px 220px at 18% 18%, rgba(255,59,212,.22), transparent 60%),
+        radial-gradient(460px 240px at 80% 18%, rgba(76,246,255,.18), transparent 60%),
+        radial-gradient(700px 280px at 50% 110%, rgba(183,255,76,.12), transparent 70%);
+      opacity:.9;
+      pointer-events:none;
+      transform: translateZ(-1px);
+    }
+
+    .sceneInner{
+      position:relative;
+      padding: clamp(18px, 3.5vw, 28px);
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 16px;
+      align-items:stretch;
+    }
+    @media (max-width: 920px){ .sceneInner{grid-template-columns:1fr} }
+
+    .sceneTitle{
+      margin:0;
+      font-size: clamp(22px, 3.2vw, 38px);
+      line-height:1.05;
+      letter-spacing:-.02em;
+    }
+    .sceneLead{
+      margin: 10px 0 0;
+      color: rgba(255,255,255,.72);
+      line-height:1.5;
+      font-size: 14.5px;
+      max-width: 70ch;
+    }
+
+    .scenePills{
+      margin-top: 14px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.22);
+      font-weight:800;
+      white-space:nowrap;
+    }
+    .pill b{
+      background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .sceneRight{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      border-radius: 20px;
+      overflow:hidden;
+      position:relative;
+      box-shadow: 0 16px 50px rgba(0,0,0,.45);
+      min-height: 240px;
+    }
+    .sceneRight img{
+      width:100%; height:100%;
+      object-fit:cover;
+      transform: scale(1.04);
+      filter: saturate(1.12) contrast(1.05);
+    }
+    .sceneRight::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.68));
+      pointer-events:none;
+    }
+    .sceneStamp{
+      position:absolute;
+      left: 14px; bottom: 12px; right: 14px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:10px;
+      z-index: 2;
+    }
+    .sceneStamp .mini{
+      font-size: 12px;
+      color: rgba(255,255,255,.78);
+      line-height:1.25;
+    }
+    .sceneStamp .mini b{
+      display:block;
+      color: rgba(255,255,255,.92);
+      font-size: 14px;
+    }
+
+    .sceneActions{
+      margin-top: 16px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    /* floating “orbs” */
+    .orbs{
+      position:absolute; inset:0;
+      pointer-events:none;
+      opacity:.9;
+    }
+    .orb{
+      position:absolute;
+      width: 180px; height:180px;
+      border-radius: 999px;
+      filter: blur(2px);
+      opacity:.55;
+      background:
+        radial-gradient(circle at 30% 35%, rgba(255,255,255,.22), transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(255,59,212,.45), transparent 62%),
+        radial-gradient(circle at 60% 55%, rgba(76,246,255,.35), transparent 60%);
+      animation: floaty 9s var(--ease) infinite;
+    }
+    .orb.o1{ left:-40px; top:-40px; transform: scale(.9); animation-delay: 0s;}
+    .orb.o2{ right:-60px; top: 40px; transform: scale(1.05); animation-delay: -2s;}
+    .orb.o3{ left: 20%; bottom:-70px; transform: scale(1.2); animation-delay: -4s;}
+    .scene.thermo .orb{
+      background:
+        radial-gradient(circle at 30% 35%, rgba(255,255,255,.18), transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(76,246,255,.45), transparent 62%),
+        radial-gradient(circle at 60% 55%, rgba(183,255,76,.25), transparent 60%);
+    }
+    @keyframes floaty{
+      0%{ transform: translate3d(0,0,0) scale(1); }
+      50%{ transform: translate3d(10px, 16px, 0) scale(1.05); }
+      100%{ transform: translate3d(0,0,0) scale(1); }
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="confetti"></canvas>
+  <div class="aurora"></div>
+  <div class="grain"></div>
+
+  <!-- портальная вспышка -->
+  <div class="portal" id="portal" aria-hidden="true">
+    <div class="portalGlow"></div>
+  </div>
+
+  <!-- экран “после выбора” -->
+  <section class="scene" id="scene" aria-live="polite">
+    <div class="sceneBg" aria-hidden="true"></div>
+    <div class="orbs" aria-hidden="true">
+      <div class="orb o1"></div>
+      <div class="orb o2"></div>
+      <div class="orb o3"></div>
+    </div>
+
+    <article class="sceneCard tiltScene">
+      <div class="sceneInner">
+        <div>
+          <h2 class="sceneTitle" id="sceneTitle">—</h2>
+          <p class="sceneLead" id="sceneLead">—</p>
+
+          <div class="scenePills">
+            <span class="pill">Выбор: <b id="scenePick">—</b></span>
+            <span class="pill">Дата: <b>8 марта</b></span>
+            <span class="pill">Для: <b>Наси</b></span>
+          </div>
+
+          <div class="sceneActions">
+            <button class="btn btnPrimary" type="button" id="sceneConfetti">Ещё конфетти ✨</button>
+            <button class="btn btnGhost" type="button" id="back">Назад к выбору</button>
+            <button class="btn btnNope" type="button" id="nope2">Нет <small>(не работает)</small></button>
+          </div>
+        </div>
+
+        <div class="sceneRight" aria-label="Гифка под выбранный вариант">
+          <img id="sceneGif" alt="Гифка" loading="lazy" src="">
+          <div class="sceneStamp">
+            <div class="mini">
+              <b id="sceneStampTitle">—</b>
+              <span id="sceneStampSub">—</span>
+            </div>
+            <div class="mini" id="sceneEmoji" style="font-size:18px;">✨</div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <main class="wrap">
+    <section class="stage">
+      <div class="hero" id="hero">
+        <div class="cubeWrap" aria-hidden="true">
+          <div class="cube">
+            <div class="face f1">8</div>
+            <div class="face f2">МАРТА</div>
+            <div class="face f3">для</div>
+            <div class="face f4">Наси</div>
+            <div class="face f5">✨</div>
+            <div class="face f6">💖</div>
+          </div>
+        </div>
+
+        <div class="topline">
+          <span class="badge"><i></i> План на 8 марта</span>
+          <span class="badge"><i></i> Выбирает только Нася</span>
+        </div>
+
+        <h1>Нася, выбирай: <span class="glowName">какой день делаем?</span></h1>
+        <p class="sub">
+          Нажми “Выбираю это” — и сайт красиво превратится в выбранный вариант.
+          Кнопка “Нет” всё равно не считается 😄
+        </p>
+
+        <div class="gifRow">
+          <div class="gifTile" role="img" aria-label="Гифка: настроение — движ">
+            <img
+              alt="Гифка"
+              loading="lazy"
+              src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbHF3aXphbWx3dG5nbXh4b2R0NHJrY2Y3aGQ0eWQ0bGx5dDNwaGZ4NSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/26ufdipQqU2lhNA4g/giphy.gif">
+            <div class="gifCap">
+              <div>
+                <b>Режим: актив</b><br>
+                <span>движ + смех</span>
+              </div>
+              <span>🌀</span>
+            </div>
+          </div>
+          <div class="gifTile" role="img" aria-label="Гифка: настроение — релакс">
+            <img
+              alt="Гифка"
+              loading="lazy"
+              src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2N5eDlpNXJwYWJkZGIzaG5wY2M5ZWR0dWQycnM4eXVnN3Z0c2ptNiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3o7aD2saalBwwftBIY/giphy.gif">
+            <div class="gifCap">
+              <div>
+                <b>Режим: чилл</b><br>
+                <span>тепло + спокойствие</span>
+              </div>
+              <span>🌊</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid">
+          <article class="card tilt" data-choice="wow" aria-label="Вариант WOW Park + фастфуд + (VR очки или квест)">
+            <div class="cardInner">
+              <div class="titleRow">
+                <h2>Вариант A: WOW Park</h2>
+                <span class="tag"><span class="dot"></span> максимум движения</span>
+              </div>
+
+              <p class="desc">
+                Батуты, адреналин, фотки/видео, потом фастфуд и финальный пункт:
+                либо VR-очки, либо квест.
+              </p>
+
+              <ul class="list">
+                <li><i></i><span><b>WOW Park:</b> прыжки, трюки, кайф от движухи</span></li>
+                <li><i></i><span><b>Фастфуд:</b> вкусно, быстро, без лишних заморочек</span></li>
+                <li><i></i><span><b>Финал:</b> VR-очки <u>или</u> квест — как захочешь</span></li>
+              </ul>
+
+              <div class="actions">
+                <button class="btn btnPrimary choose" type="button" data-pick="wow">Выбираю это 💥</button>
+                <button class="btn btnNope nope" type="button">Нет <small>(не работает)</small></button>
+              </div>
+            </div>
+          </article>
+
+          <article class="card tilt" data-choice="thermo" aria-label="Вариант Термо воды + еда после">
+            <div class="cardInner">
+              <div class="titleRow">
+                <h2>Вариант B: Термо-воды</h2>
+                <span class="tag"><span class="dot"></span> релакс на максимум</span>
+              </div>
+
+              <p class="desc">
+                Тёплые воды, восстановление, спокойствие — и потом вкусно поесть.
+                Идеально для мягкого, приятного дня.
+              </p>
+
+              <ul class="list">
+                <li><i></i><span><b>Термо:</b> тепло, отдых, “перезагрузка”</span></li>
+                <li><i></i><span><b>Чилл-зона:</b> никаких спешек, просто кайф</span></li>
+                <li><i></i><span><b>После:</b> выбираем место по настроению</span></li>
+              </ul>
+
+              <div class="actions">
+                <button class="btn btnPrimary choose" type="button" data-pick="thermo">Выбираю это 🌊</button>
+                <button class="btn btnNope nope" type="button">Нет <small>(не работает)</small></button>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="footerNote">
+          <span>Подсказка: “Нет” — кнопка-обманка 😄</span>
+          <span class="kbd">Выбор → портал → новый экран</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // ---------- 3D tilt для карточек ----------
+    (function(){
+      const cards = document.querySelectorAll(".tilt, .tiltScene");
+      const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+
+      cards.forEach(card => {
+        let raf = 0;
+
+        const onMove = (e) => {
+          const r = card.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width;
+          const y = (e.clientY - r.top) / r.height;
+
+          const rx = clamp((0.5 - y) * 10, -10, 10);
+          const ry = clamp((x - 0.5) * 14, -14, 14);
+
+          cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(() => {
+            card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateY(-1px)`;
+          });
+        };
+
+        const onLeave = () => {
+          cancelAnimationFrame(raf);
+          card.style.transform = `rotateX(0deg) rotateY(0deg) translateY(0px)`;
+        };
+
+        card.addEventListener("mousemove", onMove, {passive:true});
+        card.addEventListener("mouseleave", onLeave, {passive:true});
+      });
+    })();
+
+    // ---------- “Нет” кнопка: уезжает и всё равно приводит к “да” ----------
+    (function(){
+      const nopeButtons = document.querySelectorAll(".nope");
+      const choices = ["wow", "thermo"];
+
+      function jump(btn){
+        const parent = btn.closest(".card");
+        const r = parent.getBoundingClientRect();
+        const bx = Math.random() * (r.width - 140);
+        const by = Math.random() * (r.height - 60);
+        btn.style.position = "absolute";
+        btn.style.left = bx + "px";
+        btn.style.top = by + "px";
+      }
+
+      nopeButtons.forEach(btn => {
+        btn.addEventListener("mouseenter", () => jump(btn), {passive:true});
+        btn.addEventListener("click", () => {
+          pick(choices[Math.floor(Math.random()*choices.length)], true);
+        });
+      });
+    })();
+
+    // ---------- СЦЕНА ПОСЛЕ ВЫБОРА ----------
+    const hero = document.getElementById("hero");
+    const portal = document.getElementById("portal");
+    const scene = document.getElementById("scene");
+
+    const sceneTitle = document.getElementById("sceneTitle");
+    const sceneLead  = document.getElementById("sceneLead");
+    const scenePick  = document.getElementById("scenePick");
+    const sceneGif   = document.getElementById("sceneGif");
+    const sceneStampTitle = document.getElementById("sceneStampTitle");
+    const sceneStampSub   = document.getElementById("sceneStampSub");
+    const sceneEmoji = document.getElementById("sceneEmoji");
+
+    const data = {
+      wow: {
+        pick: "WOW Park + фастфуд + (VR-очки или квест)",
+        title: "Вариант A: Движ + VR 🔥",
+        lead:
+          "Окей, это будет максимально весело. Батуты → фастфуд → финал, где можно либо улететь в VR-мир, либо затащить квест.",
+        gif: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbHF3aXphbWx3dG5nbXh4b2R0NHJrY2Y3aGQ0eWQ0bGx5dDNwaGZ4NSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/26ufdipQqU2lhNA4g/giphy.gif",
+        stampTitle: "Режим: победа",
+        stampSub: "батуты → еда → VR/квест",
+        emoji: "🕶️"
+      },
+      thermo: {
+        pick: "Термо-воды + еда после",
+        title: "Вариант B: Термо-чилл 🌊",
+        lead:
+          "Это день “перезагрузки”: тепло, спокойствие, кайф. После термо — вкусно поесть и просто быть в моменте.",
+        gif: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2N5eDlpNXJwYWJkZGIzaG5wY2M5ZWR0dWQycnM4eXVnN3Z0c2ptNiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3o7aD2saalBwwftBIY/giphy.gif",
+        stampTitle: "Режим: мягко",
+        stampSub: "тепло → отдых → вкусно поесть",
+        emoji: "🌊"
+      }
+    };
+
+    document.querySelectorAll(".choose").forEach(b=>{
+      b.addEventListener("click", () => pick(b.dataset.pick, false));
+    });
+
+    function pick(key, fromNope){
+      const d = data[key] || data.wow;
+
+      // заполнить сцену
+      sceneTitle.textContent = fromNope ? "Ну конечно “ДА” 😄" : d.title;
+      sceneLead.textContent  = d.lead;
+      scenePick.textContent  = d.pick;
+      sceneGif.src           = d.gif;
+      sceneStampTitle.textContent = d.stampTitle;
+      sceneStampSub.textContent   = d.stampSub;
+      sceneEmoji.textContent      = d.emoji;
+
+      // классы темы
+      scene.classList.remove("wow","thermo");
+      scene.classList.add(key);
+
+      portal.classList.remove("wow","thermo");
+      portal.classList.add(key);
+
+      // запуск перехода: портал + уезд hero + показ scene
+      portal.classList.add("on");
+      hero.classList.add("off");
+
+      // конфетти в момент “пролёта”
+      burstConfetti();
+
+      // через чуть-чуть включаем сцену, затем прячем портал
+      window.setTimeout(() => {
+        scene.classList.add("on");
+      }, 240);
+
+      window.setTimeout(() => {
+        portal.classList.remove("on");
+        // сброс анимации портала (чтобы срабатывал снова)
+        void portal.offsetWidth;
+      }, 900);
+    }
+
+    // кнопка “нет” на сцене тоже не работает :)
+    document.getElementById("nope2").addEventListener("click", () => {
+      pick(Math.random() < 0.5 ? "wow" : "thermo", true);
+    });
+
+    // назад к выбору
+    document.getElementById("back").addEventListener("click", () => {
+      scene.classList.remove("on");
+      hero.classList.remove("off");
+
+      // небольшой “обратный” всплеск
+      portal.classList.remove("wow","thermo");
+      portal.classList.add("on");
+      window.setTimeout(() => portal.classList.remove("on"), 520);
+
+      // вернуть “Нет” кнопки в нормальную позицию
+      document.querySelectorAll(".nope").forEach(btn=>{
+        btn.style.position = "";
+        btn.style.left = "";
+        btn.style.top = "";
+      });
+    });
+
+    document.getElementById("sceneConfetti").addEventListener("click", burstConfetti);
+
+    // ---------- Конфетти (canvas), без библиотек ----------
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+
+    let W=0,H=0;
+    function resize(){
+      const dpr = window.devicePixelRatio || 1;
+      W = canvas.width = Math.floor(window.innerWidth * dpr);
+      H = canvas.height = Math.floor(window.innerHeight * dpr);
+      canvas.style.width = window.innerWidth + "px";
+      canvas.style.height = window.innerHeight + "px";
+      ctx.setTransform(1,0,0,1,0,0);
+    }
+    window.addEventListener("resize", resize, {passive:true});
+    resize();
+
+    let particles = [];
+    function burstConfetti(){
+      const dpr = window.devicePixelRatio || 1;
+      const count = 140;
+      const cx = (window.innerWidth * dpr) * 0.5;
+      const cy = (window.innerHeight * dpr) * 0.18;
+
+      for(let i=0;i<count;i++){
+        const a = Math.random() * Math.PI * 2;
+        const sp = 8 + Math.random() * 14;
+        particles.push({
+          x: cx,
+          y: cy,
+          vx: Math.cos(a) * sp,
+          vy: Math.sin(a) * sp - (10 + Math.random()*8),
+          g: 0.55 + Math.random()*0.25,
+          r: 5 + Math.random()*6,
+          rot: Math.random()*Math.PI,
+          vr: (-0.25 + Math.random()*0.5),
+          life: 130 + Math.floor(Math.random()*60)
+        });
+      }
+      if(!animating) animate();
+    }
+
+    let animating = false;
+    function animate(){
+      animating = true;
+      ctx.clearRect(0,0,W,H);
+
+      particles = particles.filter(p => p.life > 0);
+      for(const p of particles){
+        p.life--;
+        p.vy += p.g;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.rot += p.vr;
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.globalAlpha = Math.max(0, Math.min(1, p.life/180));
+
+        const grad = ctx.createLinearGradient(-p.r, -p.r, p.r, p.r);
+        grad.addColorStop(0, "rgba(255,59,212,.95)");
+        grad.addColorStop(0.5, "rgba(76,246,255,.92)");
+        grad.addColorStop(1, "rgba(183,255,76,.90)");
+        ctx.fillStyle = grad;
+
+        roundRect(ctx, -p.r, -p.r*0.6, p.r*2, p.r*1.2, 4);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      if(particles.length){
+        requestAnimationFrame(animate);
+      }else{
+        animating = false;
+        ctx.clearRect(0,0,W,H);
+      }
+    }
+
+    function roundRect(c, x, y, w, h, r){
+      const rr = Math.min(r, w/2, h/2);
+      c.beginPath();
+      c.moveTo(x+rr, y);
+      c.arcTo(x+w, y, x+w, y+h, rr);
+      c.arcTo(x+w, y+h, x, y+h, rr);
+      c.arcTo(x, y+h, x, y, rr);
+      c.arcTo(x, y, x+w, y, rr);
+      c.closePath();
+    }
+  </script>
+</body>
+</html>
